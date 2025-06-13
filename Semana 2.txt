@@ -1,0 +1,21 @@
+1 - Diferencie CI, CD e Deploy Contínuo
+
+CI (Continuous Integration) -> as alterações realizadas pelos desenvolvedores devem ser frequentemente enviadas à mainline/branch principal.
+CD (Continuous Delivery - Entrega Contínua) -> quando novos commits chegam ao repositório, a esteira é automaticamente estimulada, gerando um novo build, mas, por definição da área de negócio, ele não vai automaticamente para o ambiente de produção (pode ir até o ambiente de homologação automaticamente). Para que a nova versão entre em produção, é necessária uma ação humana.
+Deploy Contínuo -> No deploy contínuo, as alterações vão automaticamente para o ambiente de produção (podem ser usados "feature flags" para omitir novas funcionalidades, mas o novo código em si já está na versão de produção).
+
+
+2 - Explique o pipeline de entrega
+
+O pipeline é composto por diversos estágios, que podem variar dependendo do projeto e da organização.
+Alguns estágios comuns são
+Build -> build do projeto, gerando um binário, arquivo executável, etc.
+Testes -> execução de testes automatizados (testes unitários, testes de integração, etc) (existem casos em que os testes unitários são executados juntamente com o build)
+Verificação de qualidade -> análise da qualidade do código com ferramentas como SonarQube
+Deploy -> colocar a nova versão do sistema em funcionamento em algum ambiente (pode ser um processo automático, mas muitas vezes depende de uma ação humana, principalmente para o ambiente de produção)
+
+
+
+3 - Cite ao menos um padrão de release e sua utilidade
+
+Canary -> A nova versão do sistema entra em funcionamento paralelamente à versão anterior, e apenas uma parte do tráfego é redirecionado para a nova versão, o restante continua na versão anterior. O percentual de usuários na nova versão pode ser aumentado gradativamente, até que todos passem a utilizar a nova versão, e a antiga possa deixar de ser usada (caso esteja tudo ok na versão nova).
