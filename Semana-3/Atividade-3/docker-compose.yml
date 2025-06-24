@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  alurabooks:
+    image: aluradocker/alura-books:1.0
+    container_name: alurabooks
+    networks:
+      - minha-rede-bridge
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+  db:
+    image: mongo:4.4.6
+    container_name: meu-mongo
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - minha-rede-bridge
+
+networks:
+  minha-rede-bridge:
+    driver: bridge
+
+volumes:
+  mongo-data:
