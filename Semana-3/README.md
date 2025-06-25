@@ -88,3 +88,59 @@ docker compose down
 ```
 
 
+## Atividade 4 - Identificar riscos com STRIDE
+
+Realize uma modelagem de ameaças usando a metodologia STRIDE em uma funcionalidade da sua aplicação
+
+### Funcionalidade: Listagem/visualização do diário eletrônico
+
+Trata-se de uma página de acesso público que lista os diários eletrônicos e permite o download do diário em pdf.
+
+#### S - Spoofing (Falsificação de identidade)
+
+Risco baixo, mas possível. Como a funcionalidade é pública e não exige autenticação, o risco de spoofing direto (alguém fingir ser outro usuário) é baixo. Apenas se houver rastreamento de IP, cabeçalho HTTP ou outros metadados, um atacante poderia forjar essas informações para parecer outro usuário ou sistema.
+
+Quem se beneficiaria?
+Atacantes que queiram mascarar sua identidade real, para evitar detecção.
+
+
+#### T - Tampering (Manipulação de dados)
+
+Existe risco. Se não houver validação adequada no backend, um atacante poderia tentar modificar parâmetros da requisição (como número do diário ou caminho do PDF) para acessar conteúdos que não deveriam estar disponíveis, como edições futuras ainda não publicadas ou arquivos internos.
+
+Quem se beneficiaria?
+Alguém tentando acessar ou expor informações não públicas.
+
+
+#### R - Repudiation (Ações sem rastreabilidade)
+
+Existe risco, pois a funcionalidade é pública e não requer autenticação, assim não há como rastrear ou comprovar quem acessou ou tentou acessar um conteúdo.
+Por exemplo, se alguém baixar uma edição e depois alegar não ter feito isso, não há logs vinculados a um usuário específico.
+
+Quem se beneficiaria?
+Qualquer pessoa que deseje negar ter acessado ou baixado determinada edição.
+
+
+#### I - Information Disclosure (Vazamento de informações)
+
+Existe risco, se o sistema listar ou permitir o acesso a diários ainda não publicados oficialmente (por erro de configuração ou lógica de listagem), informações sensíveis poderiam vazar antes do tempo.
+
+Quem se beneficiaria?
+Qualquer pessoa interessada em obter informações antes da divulgação oficial.
+
+
+#### D - Denial of Service (Interrupção do serviço)
+
+Existe risco. Como o serviço é público, está sujeito a ataques de negação de serviço (DDoS). Isso pode tornar a listagem inacessível, prejudicando o acesso da população às publicações.
+
+Quem se beneficiaria?
+Pessoas interessadas em impedir o acesso à informação temporariamente.
+
+
+#### E - Elevation of Privilege (Elevação de privilégio)
+
+Risco baixo ou inexistente. Como não há autenticação ou permissões associadas à listagem, não há papéis a escalar nesta funcionalidade específica.
+Pode ocorrer risco caso o endpoint público de listagem ajude a descobrir outros endpoints mais sensíveis. Nesse caso um atacante pode tentar descobrir e abusar desses para ganhar acesso privilegiado.
+
+Quem se beneficiaria?
+Atacantes tentando explorar outras brechas no sistema para obter mais acesso.
